@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      height: 100vh;
+    display: grid;
+    place-items: center;
+    }
+
+    .card{
+     background-color: #627e75;
+      text-align: center;
+      justify-content: center;
+      border: 1px solid black;
+      width: 250px;
+      height: 340px;
+      border-radius: 20px;
+    }
+    button{
+      background-color: orange;
+    }
+    .top{
+      padding-top:20px;
+    }
+    .last{
+      display:flex;
+      justify-content: space-around;
+    }
+   
+  </style>
+</head>
+<body>
+  
+  <div class="card">
+    <h1 id="app">Weather app</h1>
+    <div class="top">
+     <input type="text" name="" id="" placeholder="Enter the ">
+     <button>Serch</button>
+    </div>
+     <div class="middle">
+      <h1 id="temp">6°C</h1>
+      <p id="city">city name</p>
+     </div>
+     <div class="last">
+      <div class="h">
+        <h4 id="hum">12km</h4>
+        <p>Humidity</p>
+      </div>
+      <div class="w">
+        <h4 id="wind">12km/s</h4>
+        <p>speed</p>
+      </div>
+     </div>
+  </div>
+  <script>
+   let city=document.querySelector("#city");
+   let temp=document.querySelector("#temp");
+   let h=document.querySelector("#h");
+   let wind=document.querySelector("#wind");
+    const apiKey="9c79f294108f3ee17af5d094caa48410";
+     const apiUrl="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+  const serch=document.querySelector("input");
+  const btm=document.querySelector("button");
+async function checkWeather(city){
+  const response=await fetch(apiUrl+city+`&appid=${apiKey}`);
+
+  var data=await response.json();
+  console.log(data);
+  city.innerHTML=data.name;
+  temp.innerHTML=Math.floor(data.main.temp)+"°C";
+  temp.h=data.main.humidity+"%";
+  wind.innerHTML=data.wind.speed+" km/h";
+}
+
+btm.addEventListener("click",()=>{
+  checkWeather(serch.value);
+})
+
+  </script>
+</body>
+</html>
